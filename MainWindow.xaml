@@ -86,11 +86,21 @@
                          HorizontalAlignment="Stretch"/>
         </StackPanel>
 
-        <TextBlock Grid.Row="2" 
-                   Text="made by Nicolas Kovac" 
-                   Style="{StaticResource CaptionTextBlockStyle}" 
-                   Foreground="{ThemeResource TextFillColorDisabledBrush}" 
-                   HorizontalAlignment="Center" 
-                   Margin="0,0,0,12"/>
+        <StackPanel Grid.Row="2" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center" 
+            Margin="0,0,0,12" 
+            Spacing="4">
+            <TextBlock Text="made by Nicolas Kovac —" 
+               Style="{StaticResource CaptionTextBlockStyle}" 
+               Foreground="{ThemeResource TextFillColorDisabledBrush}" 
+               VerticalAlignment="Center"/>
+
+            <HyperlinkButton Content="GitHub" 
+                     NavigateUri="https://github.com/NicolasK98/ImageToWebpConverter" 
+                     FontSize="12" 
+                     Padding="0" 
+                     VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Window>
