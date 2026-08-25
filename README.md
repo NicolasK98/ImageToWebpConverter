@@ -30,7 +30,7 @@ Non richiede alcuna installazione.
 
 ---
 
-## 🛠️ Stack Tecnologico
+## Stack Tecnologico
 
 * **Linguaggio:** C# / .NET 8
 * **UI Framework:** WinUI 3 (Windows App SDK)
