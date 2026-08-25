@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ImageToWebpConverter (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ImageToWebpConverter (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Cartelle di compilazione
+[Bb]in/
+[Oo]bj/
+.vs/
+
+# File temporanei ed eseguibili locali
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# File di output di pubblicazione
+publish/
