@@ -1,7 +1,7 @@
 using ImageMagick;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +20,7 @@ namespace ImageToWebpConverter
     {
         private List<string> selectedFiles = new();
         private bool isWindowInitialized = false;
+        private readonly ResourceLoader resourceLoader;
 
         private static readonly HashSet<string> SupportedExtensions = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -30,12 +31,31 @@ namespace ImageToWebpConverter
         {
             this.InitializeComponent();
 
-            // Configurazione elementi grafici di base
+            resourceLoader = new ResourceLoader();
+
+            ApplyLocalizedStrings();
+
             this.SystemBackdrop = new MicaBackdrop();
             this.ExtendsContentIntoTitleBar = true;
-
-            // Collega l'evento per la configurazione nativa post-inizializzazione
             this.Activated += MainWindow_Activated;
+        }
+
+        private void ApplyLocalizedStrings()
+        {
+            this.Title = resourceLoader.GetString("AppTitle");
+            TxtAppTitle.Text = resourceLoader.GetString("AppTitle");
+            TxtDragHeader.Text = resourceLoader.GetString("DragText");
+            TxtDragSubHeader.Text = resourceLoader.GetString("DragSubText");
+            BtnSelect.Content = resourceLoader.GetString("SelectBtn");
+            TxtStatus.Text = resourceLoader.GetString("StatusNoFiles");
+            BtnConvert.Content = resourceLoader.GetString("ConvertBtn");
+            UpdateQualityText((int)SliderQuality.Value);
+        }
+
+        private void UpdateQualityText(int quality)
+        {
+            string format = resourceLoader.GetString("QualityLabel");
+            TxtQuality.Text = string.Format(format, quality);
         }
 
         private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
@@ -43,11 +63,7 @@ namespace ImageToWebpConverter
             if (!isWindowInitialized)
             {
                 isWindowInitialized = true;
-
-                // Aggancia la TitleBar personalizzata XAML
                 this.SetTitleBar(AppTitleBar);
-
-                // Configura dimensioni e icona appena l'HWND è pronto
                 SetWindowSize(460, 480);
                 SetAppIcon();
             }
@@ -57,10 +73,7 @@ namespace ImageToWebpConverter
         {
             try
             {
-                // 1. Cerca prima dentro Assets/appicon.ico
                 string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "appicon.ico");
-
-                // 2. Se non esiste in Assets, cerca nella radice principale di pubblicazione
                 if (!File.Exists(iconPath))
                 {
                     iconPath = Path.Combine(AppContext.BaseDirectory, "appicon.ico");
@@ -81,7 +94,7 @@ namespace ImageToWebpConverter
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Copy;
-            e.DragUIOverride.Caption = "Aggiungi immagini per la conversione";
+            e.DragUIOverride.Caption = resourceLoader.GetString("DragCaption");
             e.DragUIOverride.IsCaptionVisible = true;
             e.DragUIOverride.IsContentVisible = true;
         }
@@ -100,7 +113,8 @@ namespace ImageToWebpConverter
                 if (files.Count > 0)
                 {
                     selectedFiles = files;
-                    TxtStatus.Text = $"{selectedFiles.Count} file pronti per la conversione";
+                    string format = resourceLoader.GetString("StatusReady");
+                    TxtStatus.Text = string.Format(format, selectedFiles.Count);
                     BtnConvert.IsEnabled = true;
                     ProgBar.Value = 0;
                 }
@@ -128,8 +142,8 @@ namespace ImageToWebpConverter
             if (files != null && files.Count > 0)
             {
                 selectedFiles = files.Select(f => f.Path).ToList();
-
-                TxtStatus.Text = $"{selectedFiles.Count} file selezionati";
+                string format = resourceLoader.GetString("StatusSelected");
+                TxtStatus.Text = string.Format(format, selectedFiles.Count);
                 BtnConvert.IsEnabled = true;
                 ProgBar.Value = 0;
             }
@@ -137,9 +151,9 @@ namespace ImageToWebpConverter
 
         private void SliderQuality_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            if (TxtQuality != null)
+            if (TxtQuality != null && resourceLoader != null)
             {
-                TxtQuality.Text = $"Qualità WebP: {(int)e.NewValue}%";
+                UpdateQualityText((int)e.NewValue);
             }
         }
 
@@ -198,7 +212,7 @@ namespace ImageToWebpConverter
                 });
             });
 
-            TxtStatus.Text = "Conversione completata!";
+            TxtStatus.Text = resourceLoader.GetString("StatusCompleted");
             BtnSelect.IsEnabled = true;
             BtnConvert.IsEnabled = false;
             selectedFiles.Clear();

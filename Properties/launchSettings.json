@@ -5,6 +5,13 @@
     },
     "ImageToWebpConverter (Unpackaged)": {
       "commandName": "Project"
+    },
+    "TestLang": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_CLI_UI_LANGUAGE": "de-DE",
+        "VS_UNICODE_OUTPUT": "de-DE"
+      }
     }
   }
 }

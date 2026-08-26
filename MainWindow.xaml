@@ -2,7 +2,7 @@
     x:Class="ImageToWebpConverter.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Convertitore Image -> WebP">
+    Title="ImageToWebpConverter">
 
     <Grid AllowDrop="True" 
           DragOver="Grid_DragOver" 
@@ -19,7 +19,7 @@
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="10">
                 <FontIcon Glyph="&#xE8B9;" FontSize="14"/>
-                <TextBlock Text="Convertitore Image in WebP" 
+                <TextBlock x:Name="TxtAppTitle" 
                    Style="{StaticResource CaptionTextBlockStyle}" 
                    VerticalAlignment="Center"/>
             </StackPanel>
@@ -39,30 +39,27 @@
                     Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}">
                 <StackPanel Spacing="6" HorizontalAlignment="Center">
                     <FontIcon Glyph="&#xE8E5;" FontSize="28" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                    <TextBlock Text="Trascina qui le tue immagini" 
+                    <TextBlock x:Name="TxtDragHeader" 
                                Style="{StaticResource BodyStrongTextBlockStyle}" 
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="Supporta JPG, PNG, WEBP, AVIF, BMP, TIFF, GIF" 
+                    <TextBlock x:Name="TxtDragSubHeader" 
                                Style="{StaticResource CaptionTextBlockStyle}" 
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" 
                                HorizontalAlignment="Center"/>
                 </StackPanel>
             </Border>
 
-            <Button x:Name="BtnSelect" 
-                    Content="Seleziona Immagini" 
+            <Button x:Name="BtnSelect"
                     Click="BtnSelect_Click" 
                     HorizontalAlignment="Stretch"/>
 
-            <TextBlock x:Name="TxtStatus" 
-                       Text="Nessun file selezionato" 
+            <TextBlock x:Name="TxtStatus"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" 
                        HorizontalAlignment="Center"
                        FontSize="12"/>
 
             <StackPanel Spacing="4" Margin="0,4,0,0">
-                <TextBlock x:Name="TxtQuality" 
-                           Text="Qualità WebP: 80%" 
+                <TextBlock x:Name="TxtQuality"
                            Style="{StaticResource BodyTextBlockStyle}"/>
                 <Slider x:Name="SliderQuality" 
                         Minimum="1" 
@@ -71,8 +68,7 @@
                         ValueChanged="SliderQuality_ValueChanged"/>
             </StackPanel>
 
-            <Button x:Name="BtnConvert" 
-                    Content="Avvia Conversione" 
+            <Button x:Name="BtnConvert"
                     Click="BtnConvert_Click" 
                     IsEnabled="False" 
                     Style="{StaticResource AccentButtonStyle}" 

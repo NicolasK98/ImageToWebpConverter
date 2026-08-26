@@ -6,13 +6,14 @@
     <RootNamespace>ImageToWebpConverter</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\appicon.ico</ApplicationIcon>
+    <DefaultLanguage>en-US</DefaultLanguage>
 
     <Company>NicolasK98</Company>
     <Authors>Nicolas Kovac</Authors>
     <Product>Convertitore Image in WebP</Product>
     <Description>Strumento batch per la conversione rapida di immagini in formato WebP.</Description>
     <Copyright>Copyright © 2026 Nicolas Kovac</Copyright>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <AssemblyName>ImageToWebpConverter-v$(Version)-win-x64</AssemblyName>
 
     <Platform>x64</Platform>
@@ -57,11 +58,6 @@
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
-  <!--
-    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
-    Tools extension to be activated for this project even if the Windows App SDK Nuget
-    package has not yet been restored.
-  -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
   </ItemGroup>
@@ -90,11 +86,6 @@
     </None>
   </ItemGroup>
 
-  <!--
-    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
-    Explorer "Package and Publish" context menu entry to be enabled for this project even if
-    the Windows App SDK Nuget package has not yet been restored.
-  -->
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
@@ -112,9 +103,6 @@
       <_PriFiles Include="$(OutputPath)resources.pri" Condition="Exists('$(OutputPath)resources.pri')" />
       <_PriFiles Include="$(ProjectDir)resources.pri" Condition="Exists('$(ProjectDir)resources.pri')" />
     </ItemGroup>
-    <Copy SourceFiles="@(_PriFiles)"
-          DestinationFolder="$(PublishDir)"
-          SkipUnchangedFiles="true"
-          Condition="'@(_PriFiles)' != ''" />
+    <Copy SourceFiles="@(_PriFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" Condition="'@(_PriFiles)' != ''" />
   </Target>
 </Project>
