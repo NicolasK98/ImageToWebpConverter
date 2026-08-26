@@ -40,4 +40,4 @@ Non richiede alcuna installazione.
 
 ## Licenza
 
-Questo progetto è rilasciato sotto licenza [MIT](LICENSE).
+Questo progetto è rilasciato sotto licenza [MIT](LICENSE.txt).
